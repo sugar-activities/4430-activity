@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Content Editor</title>
+<link rel="stylesheet" href="content/karma/css/global.css" type="text/css" />
+<script type="text/javascript" src="content/karma/js/external/jquery-1.4.2.js"></script>
+<script type="text/javascript" src="content/karma/js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="content/karma/js/assets.js"></script>
+<script type="text/javascript">
+host = 'http://localhost:8008/'
+url = window.location+'';
+parts = url.split('?');
+parts.shift();
+temp = parts[0];
+items = temp.split('/');
+items.pop();
+openfolder = items.join('/')+'/';
+openfile = openfolder + 'source.txt';
+next = 1
+
+$(function(){
+  $('<div>',{
+      class:'linkBack topbtn_left',
+      id:'linkBack',
+      title:'Back',
+      click:function(){
+          response = confirm('Save?');
+          if(!response){
+              window.location = host + openfolder + 'index.html';
+          }else{
+              var oEditor = CKEDITOR.instances.cntnt;
+              var txt = oEditor.getData();
+              $.get(host+'cgi-bin/saveFile.py',
+              {'fn':openfile,'txt':txt},
+              function(){window.location = host + openfolder + 'index.html';});
+          };
+        }
+      })
+      .appendTo('#header');
+  $('<div>',{
+      id:'lesson_title',
+      class:'lesson_title',
+      })
+      .text('Content Edit')
+      .appendTo('#header');
+  $('<img>',{
+      src:'content/karma/image/title_block_lt.png',
+      class:'title_img'
+      })
+      .prependTo('#lesson_title');
+  $('<img>',{
+      src:'content/karma/image/title_block_rt.png',
+      class:'title_img'
+      })
+      .appendTo('#lesson_title');
+  $('<div>',{
+      class:'linkQuit topbtn_right',
+      id:'linkQuit',
+      title:'Quit',
+      click:function(){
+        window.close();
+      } 
+      })
+      .appendTo('#header');
+  $('<div>',{
+      class:'linkImage topbtn_right',
+      id:'linkImage',
+      title:'Image',
+      click:function(){
+        manageImage('',openfolder);
+      } 
+      })
+      .appendTo('#header');
+  $('<div>',{
+      id:'dummy',
+  })
+      .appendTo('#footer')
+      .hide();  
+  $('<div>',{
+      class:'linkAudio topbtn_right',
+      id:'linkAudio',
+      title:'Audio',
+      click:function(){
+        manageAudio('',openfolder);
+      } 
+      })
+      .appendTo('#header');
+  $('<textarea id="cntnt">').appendTo('#content')
+  $('#cntnt')
+      .load(host + 'cgi-bin/fetchFile.py',
+      {'openfile':openfile},
+      function(){
+		CKEDITOR.replace( 'cntnt',
+			{
+                                height: '800px',
+				sharedSpaces :
+				{
+					top : 'footer'
+				},
+
+				// Removes the maximize plugin as it's not usable
+				// in a shared toolbar.
+				removePlugins : 'maximize'
+			} );
+      });
+});
+
+</script>
+</head>
+<body>
+<div id="header"></div>
+<div id="content"></div>
+<div id="footer" style='height:100px'></div>
+</body>
+</html>
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Not Connected</title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="content/karma/css/global.css" type="text/css"/>
+<link rel="stylesheet" href="content/karma/css/menu.css" type="text/css"/>
+<script type="text/javascript" src="content/karma/js/external/jquery-1.4.2.js"></script>
+<script type="text/javascript">
+$(function(){
+  $('<div>',{
+      class:'linkBack topbtn_left',
+      id:'linkBack',
+      title:'Back',
+      click:function(){
+         window.history.back();
+      }
+      })
+      .appendTo('#header');
+  $('<div>',{
+      id:'lesson_title',
+      class:'lesson_title',
+      })
+      .text('Not Connected')
+      .appendTo('#header');
+  $('<img>',{
+      src:'content/karma/image/title_block_lt.png',
+      class:'title_img'
+      })
+      .prependTo('#lesson_title');
+  $('<img>',{
+      src:'content/karma/image/title_block_rt.png',
+      class:'title_img'
+      })
+      .appendTo('#lesson_title');
+  $('<div>',{
+      class:'linkQuit topbtn_right',
+      id:'linkQuit',
+      title:'Quit',
+      click:function(){
+        window.close();
+      }
+      })
+      .appendTo('#header');
+});
+</script>
+</head>
+<body>
+<div id='header'></div>
+<div id='content'>
+<h2>Sorry, you must be connected to the school server to use this feature.</h2>
+</div>
+</body>
+</html>

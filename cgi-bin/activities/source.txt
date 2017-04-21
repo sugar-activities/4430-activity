@@ -1,0 +1,2 @@
+<h1>New Activity</h1>
+<p style='text-align:center'>This is an empty activity ready to be converted to a lesson.</p>

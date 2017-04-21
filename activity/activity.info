@@ -1,0 +1,8 @@
+[Activity]
+name = Learn
+bundle_id = rw.olpc.Learn
+exec = sugar-activity launch.Learn
+icon = activity-learn
+activity_version =  61
+show_launcher = yes
+license = GPLv2 + CC-BY-SA
